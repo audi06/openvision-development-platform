@@ -49,15 +49,11 @@ else
 	/bin/sh ltsubuntu.sh
 	echo "once" > user.ovstep
 fi
-gcc --version | sed -nr '/Ubuntu [0-9]+/ s/.*Ubuntu +([0-9]+).*/\1/p' > /tmp/vision-gcc-version
-VISIONGCCVERSION=`cat /tmp/vision-gcc-version`
-if [ "${VISIONGCCVERSION}" != '10' ]; then
+if [ $(gcc -dumpversion) != '10' ]; then
 	echo -e "${RED}GCC version is wrong!"
 	echo -e "It means you need to choose version 10 of GCC!"
 	sudo update-alternatives --config gcc
-	gcc --version | sed -nr '/Ubuntu [0-9]+/ s/.*Ubuntu +([0-9]+).*/\1/p' > /tmp/vision-gcc-version
-	VISIONGCCVERSION=`cat /tmp/vision-gcc-version`
-	echo -e "Done, now GCC version is: ${VISIONGCCVERSION} ${NC}"
+	echo -e "Done, now GCC version is: $(gcc -dumpfullversion) ${NC}"
 	echo -e ""
 else
 	echo -e "${GREEN}You enabled GCC 10 for OV 10.x, great!${NC}"
